@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block titulo %}{{ titulo }}{% endblock titulo %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <h1 class="mb-4">{{ titulo }}</h1>
+
+        <div class="card shadow">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data"> 
+                    {% csrf_token %}
+                    
+                    {{ form|crispy }}
+
+                    {% if formset %}
+                        <h5 class="mt-4 border-bottom pb-2 text-primary">Detalles Físicos</h5>
+                        <div class="alert alert-info py-2 small">
+                            Esta información no es obligatoria, pero es recomendable ingresarla para el manejo logístico.
+                        </div>
+                        
+                        {{ formset.management_form }}
+                        
+                        <div class="row border p-3 rounded">
+                            {% for form in formset %}
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+                                
+                                <div class="col-md-6 mb-3">
+                                    {{ form.dimensiones|as_crispy_field }}
+                                    </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    {{ form.peso|as_crispy_field }} 
+                                    </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <hr>
+                    <button type="submit" class="btn btn-primary me-2">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                    <a href="javascript:history.back()" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Cancelar
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

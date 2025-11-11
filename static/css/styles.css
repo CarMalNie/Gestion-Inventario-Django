@@ -1,0 +1,39 @@
+/* 1. Definición de Variables CSS */
+:root {
+    --gunmetal: #092327; /* Fondo más oscuro */
+    --dark-slate-gray: #0b5351; /* Fondo secundario/navbar */
+    --light-sea-green: #00a9a5; /* Color de acento/Botones */
+    --bootstrap-dark: #212529; /* Color Dark de Bootstrap */
+}
+
+/* 2. Estilo General (Fondo de la Aplicación) */
+body {
+    /* Aplicamos un color suave que contraste con el blanco del contenido */
+    background-color: #f8f9fa; 
+}
+
+/* 3. Estilos Específicos para Navbar y Footer */
+
+/* Fondo del Navbar: Usamos el color oscuro (dark-slate-gray) */
+.navbar {
+    background-color: var(--dark-slate-gray) !important;
+    border-bottom: 2px solid var(--light-sea-green); /* Línea de acento */
+}
+
+/* Fondo del Footer */
+.footer {
+    background-color: var(--gunmetal) !important;
+    color: white; /* Aseguramos que el texto sea visible */
+    /* Aseguramos que la tipografía del footer sea legible */
+}
+
+/* Ajuste del Texto del Footer (para que sea blanco y visible) */
+.footer span.text-muted {
+    color: #cccccc !important;
+}
+
+/* Ajusta el color de los botones principales */
+.btn-primary {
+    background-color: var(--light-sea-green) !important;
+    border-color: var(--light-sea-green) !important;
+} 

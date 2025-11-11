@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}Iniciar Sesión{% endblock titulo %}
+
+{% block contenido %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg">
+            
+            <div class="card-header bg-primary text-white text-center"> 
+                <h4 class="mb-0">Acceso de Usuarios</h4>
+            </div>
+            
+            <div class="card-body p-4">
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger small">
+                        {% for error in form.non_field_errors %}
+                            <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {{ form.username|as_crispy_field }}
+                    {{ form.password|as_crispy_field }}
+                    
+                    {% if next %}
+                        <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
+                    
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </button>
+                </form>
+
+            </div>
+            <div class="card-footer text-center small text-muted">
+                <p class="mb-1">¿No tienes cuenta?</p>
+                <a href="{% url 'registro' %}" class="btn btn-link p-0">Regístrate Aquí</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

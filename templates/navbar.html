@@ -1,0 +1,91 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fas fa-microchip"></i> TechShop 
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            
+            {% with user.groups.all|first as first_group %}
+                {% with first_group.name as user_role %}
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'lista_productos' %}">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'lista_categorias' %}">Categorías</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'lista_etiquetas' %}">Etiquetas</a>
+                    </li>
+
+                    {% if user.is_authenticated and user_role != 'Clientes' %}
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" href="{% url 'reporte_sql_etiquetas' %}">Auditoría por Etiquetas</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                
+                <ul class="navbar-nav">
+                    
+                    {% if user.is_authenticated %}
+                        
+                        <li class="nav-item me-3 d-flex align-items-center">
+                            <span class="navbar-text text-white-50 small">
+                                Bienvenido, 
+                                <a href="{% url 'perfil_personal' %}" class="text-white fw-bold me-1">
+                                    {{ user.username }}
+                                </a>
+                                
+                                {% if user_role %}
+                                    <span class="badge bg-primary">{{ user_role }}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Sin Rol Asignado</span>
+                                {% endif %}
+                            </span>
+                        </li>
+
+                        {% if user_role == 'Clientes' or user.is_superuser or user_role == 'Administradores' or user_role == 'Gestión' %}
+                            <li class="nav-item me-2">
+                                <a class="btn btn-sm btn-info text-white" href="{% url 'perfil_personal' %}">
+                                    <i class="fas fa-heart"></i> Favoritos
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if user.is_superuser or user_role == 'Administradores' or user_role == 'Gestión' %}
+                            <li class="nav-item me-3">
+                                <a class="btn btn-sm btn-success" href="{% url 'crear_producto' %}">
+                                    <i class="fas fa-plus"></i> Nuevo Producto
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                                {% csrf_token %} 
+                                <button type="submit" class="btn btn-sm btn-outline-light">
+                                    Salir
+                                </button>
+                            </form>
+                        </li>
+                        
+                    {% else %} <li class="nav-item me-2">
+                            <a class="btn btn-sm btn-outline-light" href="{% url 'login' %}">
+                                Iniciar Sesión
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-sm btn-primary" href="{% url 'registro' %}">
+                                Registrarse
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                
+                {% endwith %} {% endwith %} </div>
+    </div>
+</nav>

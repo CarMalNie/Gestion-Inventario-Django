@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Eliminar Producto{% endblock titulo %}
+
+{% block contenido %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card border-danger shadow-lg">
+            <div class="card-header bg-danger text-white text-center">
+                <h4 class="mb-0">Confirmar Eliminación</h4>
+            </div>
+            <div class="card-body p-4 text-center">
+                
+                <h2 class="text-danger mb-3">
+                    <i class="fas fa-exclamation-triangle"></i> ¡Advertencia de Eliminación!
+                </h2>
+                <p class="lead">
+                    ¿Está seguro de que desea eliminar el producto:
+                </p>
+                <p class="fw-bold fs-4 text-dark">"{{ producto.nombre }}"</p>
+                <p class="text-muted">
+                    Esta acción es **irreversible** y eliminará también el detalle técnico asociado.
+                </p>
+
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg me-3">
+                        <i class="fas fa-trash-alt"></i> Sí, Eliminar Permanentemente
+                    </button>
+                    <a href="{% url 'detalle_producto' pk=producto.pk %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

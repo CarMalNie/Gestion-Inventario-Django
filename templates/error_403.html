@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Acceso Denegado (403){% endblock titulo %}
+
+{% block contenido %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6 text-center">
+        <div class="display-1 text-danger fw-bold">403</div>
+        <h1 class="mb-4 text-secondary">Acceso Restringido</h1>
+        <p class="lead">
+            Lo sentimos, **su cuenta no tiene el nivel de permiso** requerido para realizar esta acción. 
+            Su rol (Ej: Cliente) no permite crear, editar o eliminar contenido.
+        </p>
+        <hr class="my-4">
+        <p class="text-danger">
+            Si cree que esto es un error, por favor, contacte a su administrador.
+        </p>
+        <a href="{% url 'home' %}" class="btn btn-primary btn-lg mt-3">
+            <i class="fas fa-home"></i> Volver a la Página de Inicio
+        </a>
+    </div>
+</div>
+{% endblock contenido %}

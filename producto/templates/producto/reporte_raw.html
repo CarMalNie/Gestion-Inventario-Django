@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Auditoría de Clasificación de Inventario{% endblock titulo %}
+
+{% block contenido %}
+    <div class="mb-4">
+        <h1>Auditoría de Clasificación de Inventario</h1>
+        <p class="lead text-muted">
+            Este reporte lista cada producto junto a su Categoría y todas las etiquetas que tiene asignadas. Utilícelo para auditar y verificar la correcta clasificación de los ítems en el inventario.
+        </p>
+    </div>
+
+    {% if reporte %}
+        <div class="alert alert-warning small">
+            **Recomendación:** Verifique que ningún producto esencial aparezca **sin etiquetas**. Los productos sin clasificación deben ser asignados para optimizar el inventario.
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Producto</th>
+                        <th>Nombre Producto</th>
+                        <th>Categoría</th> 
+                        <th>Precio</th>
+                        <th>Actualizado</th> <th>Etiquetas Asociadas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fila in reporte %}
+                    <tr>
+                        <td>{{ fila.id }}</td>
+                        <td>{{ fila.producto_nombre }}</td>
+                        <td><span class="badge bg-secondary">{{ fila.categoria_nombre }}</span></td>
+                        <td>${{ fila.producto_precio|floatformat:2 }}</td>
+                        <td>{{ fila.fecha_actualizacion|date:"d-m-Y H:i" }}</td> 
+                        <td>
+                            {% if fila.etiqueta_nombres %}
+                                <span class="badge bg-info text-dark">{{ fila.etiqueta_nombres }}</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Sin etiquetas</span>
+                            {% endif %}
+                        </td> 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning">No se encontraron resultados en el reporte.</div>
+    {% endif %}
+
+    <p class="mt-4"><a href="{% url 'home' %}" class="btn btn-secondary">Volver al inicio</a></p>
+{% endblock contenido %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Listado de Categorías{% endblock titulo %}
+
+{% block contenido %}
+    
+    {% with user.groups.first.name as user_role %}
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Catálogo de Categorías</h1>
+        
+        {% if user.is_superuser or user_role == 'Administradores' or user_role == 'Gestión' %}
+            <a href="{% url 'crear_categoria' %}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Nueva Categoría
+            </a>
+        {% endif %}
+    </div>
+
+    {% if lista_categorias %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre de Categoría</th>
+                        <th>Productos Asignados</th>
+                        
+                        {% if user.is_superuser or user.is_authenticated and user_role != 'Clientes' %}
+                            <th>Acciones</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for categoria in lista_categorias %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'detalle_categoria' pk=categoria.pk %}" title="Ver Productos Asignados">
+                                <span class="badge bg-secondary fs-6">{{ categoria.nombre }}</span>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="badge bg-info text-dark">{{ categoria.total_productos }}</span>
+                        </td>
+                        
+                        {% if user.is_superuser or user.is_authenticated and user_role != 'Clientes' %}
+                            <td>
+                                <a href="{% url 'editar_categoria' pk=categoria.pk %}" class="btn btn-sm btn-warning me-1" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                
+                                {% if user.is_superuser or user_role == 'Administradores' %}
+                                    <a href="{% url 'eliminar_categoria' pk=categoria.pk %}" class="btn btn-sm btn-danger" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No hay categorías registradas en el sistema.
+            {% if user.is_superuser or user_role != 'Clientes' %}
+                <a href="{% url 'crear_categoria' %}" class="alert-link">Cree la primera categoría aquí.</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% endwith %}
+{% endblock contenido %}

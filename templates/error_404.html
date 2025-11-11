@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Página No Encontrada (404){% endblock titulo %}
+
+{% block contenido %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6 text-center">
+        <div class="display-1 text-danger fw-bold">404</div>
+        <h1 class="mb-4 text-secondary">¡Página No Encontrada!</h1>
+        <p class="lead">
+            Lo sentimos mucho. No pudimos encontrar la URL a la que intentas acceder. 
+            Parece que has tomado un desvío que no estaba en nuestro mapa de rutas.
+        </p>
+        <hr class="my-4">
+        <p>
+            Verifica la dirección o vuelve al inicio para intentarlo de nuevo.
+        </p>
+        <a href="{% url 'home' %}" class="btn btn-primary btn-lg mt-3">
+            <i class="fas fa-home"></i> Volver a la Página de Inicio
+        </a>
+    </div>
+</div>
+{% endblock contenido %}
