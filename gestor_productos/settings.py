@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i$u6^k+nqxcxwr-mgqv^=rtce2(#b6fc8#g)2!+=s%bnj_0iq!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # Si se necesita simular un entorno de producción se debe modificar a DEBUG=False
+DEBUG = True # Si se necesita simular un entorno de producción se debe modificar a DEBUG=False
 
-ALLOWED_HOSTS = ['CarMalNie.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
